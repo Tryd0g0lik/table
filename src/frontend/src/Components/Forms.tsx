@@ -3,8 +3,6 @@ export default function FormsFC(): React.JSX.Element {
   return (
     <div className='form overflow-x-auto'>
       <form>
-
-        {/* <div className='form_body flex table-xs'> */}
         <table className="table form_body table-xs">
           <th className='coll coll-0'></th>
           <td className='coll coll-1'></td>
@@ -23,7 +21,6 @@ export default function FormsFC(): React.JSX.Element {
           <td className='coll coll-2 lastlogin'>
             <input type="text" placeholder="Insert lastname" className="input w-full max-w-xs" />
           </td>
-          {/* </div> */}
         </table>
       </form>
     </div>
