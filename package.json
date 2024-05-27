@@ -5,6 +5,7 @@
   "author": "Workaholic",
   "license": "ISC",
   "private": true,
+  "description": "README.md",
   "scripts": {
     "lint": "eslint . ",
     "server:front": "webpack server --mode=development",
