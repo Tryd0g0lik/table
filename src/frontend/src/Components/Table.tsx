@@ -26,7 +26,7 @@ export default function TableFC(): React.JSX.Element {
             <td>Littel, Schaden and Vandervort</td>
             <td>Canada</td>
             <td>12/16/2020</td>
-            <td>Blue</td>
+            <td></td>
           </tr>
           <tr>
             <th>2</th>
@@ -228,7 +228,7 @@ export default function TableFC(): React.JSX.Element {
             <th>company</th>
             <th>location</th>
             <th>Last Login</th>
-            <th>Favorite Color</th>
+            <th></th>
           </tr>
         </tfoot>
       </table>

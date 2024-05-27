@@ -1,27 +1,30 @@
 import React from 'react';
 export default function FormsFC(): React.JSX.Element {
   return (
-    <div className='form '>
+    <div className='form overflow-x-auto'>
       <form>
-        <div className='form_body flex table-xs'>
-          <div className='coll coll-0'></div>
-          <div className='coll coll-1'></div>
-          <div className='coll coll-2 name'>
+
+        {/* <div className='form_body flex table-xs'> */}
+        <table className="table form_body table-xs">
+          <th className='coll coll-0'></th>
+          <td className='coll coll-1'></td>
+          <td className='coll coll-2 name w-[17rem]'>
             <input type="text" placeholder="Insert name" className="input w-full max-w-xs" />
-          </div>
-          <div className='coll coll-2 job'>
+          </td>
+          <td className='coll coll-2 job w-[27rem]'>
             <input type="text" placeholder="Insert job" className="input w-full max-w-xs" />
-          </div>
-          <div className='coll coll-2 company'>
+          </td>
+          <td className='coll coll-2 company w-[28rem]'>
             <input type="text" placeholder="Insert company" className="input w-full max-w-xs" />
-          </div>
-          <div className='coll coll-2 location'>
+          </td>
+          <td className='coll coll-2 location w-[12.5rem]'>
             <input type="text" placeholder="Insert location" className="input w-full max-w-xs" />
-          </div>
-          <div className='coll coll-2 lastlogin'>
+          </td>
+          <td className='coll coll-2 lastlogin'>
             <input type="text" placeholder="Insert lastname" className="input w-full max-w-xs" />
-          </div>
-        </div>
+          </td>
+          {/* </div> */}
+        </table>
       </form>
     </div>
   );

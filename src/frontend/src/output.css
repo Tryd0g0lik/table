@@ -1238,6 +1238,22 @@ html {
   width: 3.5rem;
 }
 
+.w-\[12\.5rem\] {
+  width: 12.5rem;
+}
+
+.w-\[17rem\] {
+  width: 17rem;
+}
+
+.w-\[27rem\] {
+  width: 27rem;
+}
+
+.w-\[28rem\] {
+  width: 28rem;
+}
+
 .w-full {
   width: 100%;
 }
@@ -1271,8 +1287,8 @@ html {
 }
 
 .form_body {
-  display: flex;
-  flex-wrap: nowrap;
+  /* display: flex;
+                  flex-wrap: nowrap; */
   padding-left: 0.5rem;
 }
 
@@ -1284,10 +1300,14 @@ html {
   padding-right: 0.5rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  width: 32.703px;
+  width: 3.5rem;
 }
 
 .form_body .coll:nth-child(2) {
   padding: 0.25rem 0.5rem 0.25rem 0.5rem;
-  width: 3.5rem;
+  width: 10.6rem;
+}
+
+.form input.input:hover {
+  border: solid 1px #cfcfcf7d;
 }
