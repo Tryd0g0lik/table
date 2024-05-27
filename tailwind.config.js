@@ -1,9 +1,9 @@
-// module.exports = {
+module.exports = {
 	content: [
-		'./src/**/*.{js, jsx}',
-		'./src/*.{js, jsx}'
+    './src/**/*.{ts, tsx}',
+    './src/*.{ts, tsx}'
 	],
 
-	plugins: [require('daisyui')],
+  plugins: [],
 }
-/* */
+/* require('daisyui') */
