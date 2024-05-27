@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {}
+
+#root * {
+  box-sizing: border-box;
+}
+
+.form_body {
+  display: flex;
+  flex-wrap: nowrap;
+
+  padding-left: 0.5rem;
+}
+
+.form_body .coll {
+  padding: 8px;
+}
+
+.form_body .coll:first-child {
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  width: 32.703px;
+}
+
+.form_body .coll:nth-child(2) {
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  width: 3.5rem;
+}

@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // config.output.path = require('path').resolve('./interface/dist');
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './src/frontend/index.ts',
   mode: 'none',
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -50,17 +50,6 @@ module.exports = {
         ],
 
       },
-      // {
-      //   test: /\.svg$/,
-      //   type: 'asset/inline',
-      //   generator: {
-      //     // filename: '../pic/[hash][ext]'
-      //   },
-      //   use: [
-      //     'svgo-loader',
-      //     // 'svg-transform-loader'
-      //   ]
-      // },
     ]
   },
 
@@ -97,12 +86,14 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: path.resolve(__dirname, './dist'),
+      directory: path.resolve(__dirname, 'dist'),
 
     },
 
     watchFiles: [
-      './dist',
+      './src/frontend/src/**/*.tsx',
+      './src/frontend/src/**/*.ts',
+      './src/frontend/src/*.ts',
     ],
 
     compress: true,

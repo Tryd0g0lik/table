@@ -1,7 +1,7 @@
 {
   "name": "sibniiau",
   "version": "0.1.0",
-  "main": "src/index.tsx",
+  "main": "src/frontend/index.ts",
   "author": "Workaholic",
   "license": "ISC",
   "private": true,
@@ -11,7 +11,7 @@
     "server:front": "webpack server --mode=development",
     "build:dev": "webpack --mode=development --config ./webpack.config.js",
     "build": "npm run build:dev",
-    "cssstyle": "yarn add -D tailwindcss postcss autoprefixer"
+    "cssstyle": "npx tailwindcss -i ./src/frontend/src/styles/style.css -o ./src/frontend/src/output.css --watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.6",
