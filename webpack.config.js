@@ -13,7 +13,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'main-[id]-[hash].js',
-    publicPath: '/',
+    publicPath: './',
     clean: true,
   },
   target: 'web',
@@ -86,7 +86,7 @@ module.exports = {
 
     }),
     new MiniCssExtractPlugin({
-      filename: './css/style.css'
+      filename: 'main.css'
     }),
   ],
   watchOptions: {
@@ -96,13 +96,13 @@ module.exports = {
     ]
   },
   devServer: {
-    // static: {
-    //   directory: path.resolve(__dirname, './dist'),
+    static: {
+      directory: path.resolve(__dirname, './dist'),
 
-    // },
+    },
 
     watchFiles: [
-      './src',
+      './dist',
     ],
 
     compress: true,
