@@ -1,17 +1,25 @@
+import { F } from '@Interfaces';
 import React from 'react';
 
-export default function RowFC(props): React.JSX.Element {
-  const { id, name, } = props;
+export default function RowFC(props: F | F[]): React.JSX.Element {
+  const result = (Array.isArray(props)) ? props : [props];
+
   return (
-    <tr>
-      <th></th>
-      <th>preview</th>
-      <th>Name</th>
-      <th>Job</th>
-      <th>company</th>
-      <th>location</th>
-      <th>Last Login</th>
-      <th></th>
-    </tr>
+    <>
+      {result.map((item, index) => (
+        <tr key={index}>
+          <th>{item.id}</th>
+          <td>
+            <div className="skeleton w-14 h-14"></div>
+          </td>
+          <th>{item.name}</th>
+          <th>{item.job}</th>
+          <th>{item.company}</th>
+          <th>{item.location}</th>
+          <th>{item.lastlogin}</th>
+          <th></th>
+        </tr>
+      ))}
+    </>
   );
 }
