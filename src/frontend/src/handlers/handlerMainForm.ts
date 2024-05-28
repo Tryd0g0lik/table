@@ -1,7 +1,7 @@
 import { F, RequestHeaders } from '@Interfaces';
 import relevantForm from '@relevant/relevantForm';
 import Postman from '@ObjectDevelopment/requests';
-
+import React from 'react';
 const APP_TABLE_URL = ((typeof process.env.APP_TABLE_URL).includes('string')) ? process.env.APP_TABLE_URL : '';
 const APP_TABLE_PATHNAME = ((typeof process.env.APP_TABLE_PATHNAME).includes('string')) ? process.env.APP_TABLE_PATHNAME : '';
 
@@ -15,7 +15,7 @@ const datas: F = {
 const keysArr = Array.from(Object.keys(datas));
 
 // relevantForm
-export default async function handlerButtonCick(e: MouseEvent): Promise<boolean> {
+export default async function handlerButtonCick(e: React.MouseEvent<HTMLDivElement>): Promise<boolean> {
   e.preventDefault();
   const relatedTarget = e.relatedTarget as HTMLElement;
   const inputAll = relatedTarget.querySelectorAll('input');
@@ -42,7 +42,7 @@ export default async function handlerButtonCick(e: MouseEvent): Promise<boolean>
     throw err;
   }
 
-  const url = new URL(APP_TABLE_PATHNAME as string, APP_TABLE_URL);
+  const url = new URL(APP_TABLE_PATHNAME as string + '/api/v1/add/line', APP_TABLE_URL);
   const postman = new Postman(tableAll[0]);
   postman.urls = url;
   const jsonStr = JSON.stringify(datas);

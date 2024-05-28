@@ -64,7 +64,7 @@ router.get('/api/v1/all', async (ctx, next) => {
 // router.patch('/api/v1/correct/:id', async (ctx, next) => {
 // });
 
-router.post('/api/v1/line', async (ctx, next) => {
+router.post('/api/v1/add/ line', async (ctx, next) => {
 
   console.warn(`[REQ_]: ${ctx.request.body}`);
   const { owner: { name, job, company, location, lastlogin } } = JSON.parse(ctx.request.body);

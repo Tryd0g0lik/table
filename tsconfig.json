@@ -46,9 +46,9 @@
       "@ObjectDevelopment/*": [
         "src/frontend/src/oop/*",
       ],
-      // "@svgs/*": [
-      //   "src/frontend/src/svgs/*",
-      // ],
+      "@Handler/*": [
+        "src/frontend/src/handlers/*",
+      ],
       // "@pages/*": [
       //   "./src/frontend/src/components/pages/*"
       // ],

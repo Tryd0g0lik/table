@@ -1,7 +1,8 @@
 import React from 'react';
+import handlerMainForm from '@Handler/handlerMainForm';
 export default function FormsFC(): React.JSX.Element {
   return (
-    <div className='form overflow-x-auto'>
+    <div onClick={handlerMainForm} className='form overflow-x-auto'>
       <form>
         <table className="table form_body table-xs">
           <th className='coll coll-0'></th>
