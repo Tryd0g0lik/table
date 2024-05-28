@@ -8,12 +8,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // config.output.path = require('path').resolve('./interface/dist');
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './src/frontend/index.ts',
   mode: 'none',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'main-[id]-[hash].js',
-    publicPath: '/',
+    publicPath: './',
     clean: true,
   },
   target: 'web',
@@ -50,17 +50,6 @@ module.exports = {
         ],
 
       },
-      // {
-      //   test: /\.svg$/,
-      //   type: 'asset/inline',
-      //   generator: {
-      //     // filename: '../pic/[hash][ext]'
-      //   },
-      //   use: [
-      //     'svgo-loader',
-      //     // 'svg-transform-loader'
-      //   ]
-      // },
     ]
   },
 
@@ -86,7 +75,7 @@ module.exports = {
 
     }),
     new MiniCssExtractPlugin({
-      filename: './css/style.css'
+      filename: 'main.css'
     }),
   ],
   watchOptions: {
@@ -96,13 +85,15 @@ module.exports = {
     ]
   },
   devServer: {
-    // static: {
-    //   directory: path.resolve(__dirname, './dist'),
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
 
-    // },
+    },
 
     watchFiles: [
-      './src',
+      './src/frontend/src/**/*.tsx',
+      './src/frontend/src/**/*.ts',
+      './src/frontend/src/*.ts',
     ],
 
     compress: true,
@@ -120,10 +111,11 @@ module.exports = {
     ],
 
     alias: {
-      // '@Websocket': path.resolve(__dirname, "src/scripts/websockets/index.ts"),
-      // "@Interfaces": path.resolve(__dirname, "src/interface.ts"),
-      // "@htmlTemplates": path.resolve(__dirname, "src/scripts/templates"),
-      // "@Service": path.resolve(__dirname, "src/scripts/chat"),
+      '@ObjectDevelopment': path.resolve(__dirname, "src/frontend/src/oop"),
+      "@Interfaces": path.resolve(__dirname, "src/frontend/src/interfaces.ts"),
+      "@relevant": path.resolve(__dirname, "src/frontend/src/relevant"),
+      "@Service": path.resolve(__dirname, "src/frontend/src/services"),
+      "@Handler": path.resolve(__dirname, "src/frontend/src/handlers"),
     }
   },
 

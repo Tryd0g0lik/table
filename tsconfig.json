@@ -34,21 +34,24 @@
       // "@Websocket": [
       //   "src/scripts/websockets/index.ts"
       // ],
-      // "@Interfaces": [
-      //   "src/interface.ts"
-      // ],
-      // "@htmlTemplates/*": [
-      //   "src/scripts/templates/*"
-      // ],
-      // "@Service/*": [
-      //   "src/scripts/chat/*"
-      // ]
-      // "@img/*": [
-      //   "src/frontend/src/img/*",
-      // ],
-      // "@svgs/*": [
-      //   "src/frontend/src/svgs/*",
-      // ],
+      "@Interfaces": [
+        "src/frontend/src/interfaces.ts"
+      ],
+      "@relevant/*": [
+        "src/frontend/src/relevant/*"
+      ],
+      "@Service/*": [
+        "src/frontend/src/services/*"
+      ],
+      "@ObjectDevelopment/*": [
+        "src/frontend/src/oop/*",
+      ],
+      "@Handler/*": [
+        "src/frontend/src/handlers/*",
+      ],
+      "@ind": [
+        "src/backend/src/getId.ts"
+      ]
       // "@pages/*": [
       //   "./src/frontend/src/components/pages/*"
       // ],
