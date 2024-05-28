@@ -1,0 +1,26 @@
+{
+  // "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "sourceMap": false,
+    "outDir": "../../dist/server",
+    "module": "CommonJS",
+    "allowJs": false,
+    "strictNullChecks": true,
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "node_modules",
+    "directory",
+    "dist",
+    "**/db"
+  ],
+  "files": [
+    ".\\src\\index.ts",
+    // ".\\src\\server\\web-socket\\index.ts"
+  ]
+  // 
+  // "include": [
+  //   "../../dist/server"
+  // ]
+}

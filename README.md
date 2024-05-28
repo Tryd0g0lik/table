@@ -21,7 +21,8 @@
 
  - `server:front` this's  start wark for a local server of front;
  - `cssstyle` here styles of out framework. This command is a runs styles
-
+ - `watchs` run the `server.js' of backend
+ 
 ## History
 - [master]: github's root;
 - [1]: Beginning works; 

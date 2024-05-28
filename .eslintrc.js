@@ -113,6 +113,9 @@ module.exports = {
     "./custom.d.ts",
     "*.js",
     "**/dist/*.js",
-    "./dist/**/*.js"
+    "./dist/**/*.js",
+    "./src/backend/**/*.ts",
+    "./src/backend/*.ts",
+    "./src/backend/*.js"
   ]
 }

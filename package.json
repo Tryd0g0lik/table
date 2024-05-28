@@ -6,12 +6,18 @@
   "license": "ISC",
   "private": true,
   "description": "README.md",
+  "workspaces": [
+    "src/backend"
+  ],
   "scripts": {
     "lint": "eslint . ",
     "server:front": "webpack server --mode=development",
     "build:dev": "webpack --mode=development --config ./webpack.config.js",
-    "build": "npm run build:dev",
-    "cssstyle": "npx tailwindcss -i ./src/frontend/src/styles/style.css -o ./src/frontend/src/output.css --watch"
+    "build": "yarn run build:dev",
+    "cssstyle": "npx tailwindcss -i ./src/frontend/src/styles/style.css -o ./src/frontend/src/output.css --watch",
+    "install:back": "yarn add -W --workspace=backend run package.json",
+    "watchs": "yarn workspace backend run watch",
+    "build:render": "npm install -W package.json && npm --workspace=backend install package.json"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.6",
@@ -89,6 +95,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "run": "^1.5.0",
     "web-vitals": "^2.1.0"
   }
 }
