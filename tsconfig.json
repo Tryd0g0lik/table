@@ -40,12 +40,12 @@
       "@relevant/*": [
         "src/frontend/src/relevant/*"
       ],
-      // "@Service/*": [
-      //   "src/scripts/chat/*"
-      // ]
-      // "@img/*": [
-      //   "src/frontend/src/img/*",
-      // ],
+      "@Service/*": [
+        "src/frontend/src/services/*"
+      ],
+      "@ObjectDevelopment/*": [
+        "src/frontend/src/oop/*",
+      ],
       // "@svgs/*": [
       //   "src/frontend/src/svgs/*",
       // ],

@@ -111,10 +111,10 @@ module.exports = {
     ],
 
     alias: {
-      // '@Websocket': path.resolve(__dirname, "src/scripts/websockets/index.ts"),
+      '@ObjectDevelopment': path.resolve(__dirname, "src/frontend/src/oop"),
       "@Interfaces": path.resolve(__dirname, "src/frontend/src/interfaces.ts"),
       "@relevant": path.resolve(__dirname, "src/frontend/src/relevant"),
-      // "@Service": path.resolve(__dirname, "src/scripts/chat"),
+      "@Service": path.resolve(__dirname, "src/frontend/src/services"),
     }
   },
 

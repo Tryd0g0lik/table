@@ -1,4 +1,4 @@
-const relevantForm = (arr: string[]): boolean => {
+export default function relevantForm(arr: string[]): boolean {
   if ((!Array.isArray(arr)) && ((Array.isArray(arr)) && (arr.length === 0))) {
     const err = new Error();
     err.name = '[relevantForm]';
@@ -13,5 +13,3 @@ const relevantForm = (arr: string[]): boolean => {
   }
   return true;
 };
-
-export default { relevantForm };

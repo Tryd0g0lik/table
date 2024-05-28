@@ -4,7 +4,7 @@ import FormsFC from './Forms';
 export default function TableFC(): React.JSX.Element {
   return (
     <div className="overflow-x-auto">
-      <table className="table table-xs">
+      <table className="main table table-xs">
         <thead>
           <tr>
             <th></th>
