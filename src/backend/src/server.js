@@ -44,6 +44,9 @@ const fortune = (ctx, body = null, status = 200) => {
     console.warn(`[REQ_6]: ${JSON.stringify(ob)}`);
     ind += 1
   }
+  if (status === 200) {
+    body = JSON.stringify(items);
+  }
   const delay = 0;
   return new Promise((resolve, reject) => {
 
@@ -72,7 +75,7 @@ const router = new Router();
 
 
 router.get('/api/v1/all', async (ctx, next) => {
-  return fortune(ctx, persons);
+  return fortune(ctx, items);
 });
 
 // router.delete('/api/items', async (ctx, next) => {

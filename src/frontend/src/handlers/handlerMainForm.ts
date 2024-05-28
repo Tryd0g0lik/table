@@ -14,7 +14,6 @@ let datas: F = {
 };
 const keysArr = Array.from(Object.keys(datas));
 
-// relevantForm
 export default async function handlerButtonCick(e: React.MouseEvent<HTMLDivElement>): Promise<boolean> {
   e.preventDefault();
   if (!((e.target as HTMLElement).tagName).includes('BUTTON')) {
@@ -27,15 +26,9 @@ export default async function handlerButtonCick(e: React.MouseEvent<HTMLDivEleme
     return false;
   }
 
-  // const newdatas = Object.create(datas);
   for (let i = 0; i < keysArr.length; i++) {
-    // if (inputAll[i].getAttribute(keysArr[i]) !== null) {
-    // const { name, job, company, location, lastlogin } = keysArr;
     const ind = keysArr.indexOf(keysArr[i]);
-    // datas.keysArr[ind] = inputAll[ind].value;
-
     datas[keysArr[ind]] = inputAll[ind].value;
-    // }
   }
 
   const valeuArr = Array.from(Object.values(datas));
@@ -52,13 +45,22 @@ export default async function handlerButtonCick(e: React.MouseEvent<HTMLDivEleme
     throw err;
   }
 
-  const url = new URL(APP_TABLE_PATHNAME as string + '/api/v1/add/line', APP_TABLE_URL);
+  let url = new URL(APP_TABLE_PATHNAME as string + '/api/v1/add/line', APP_TABLE_URL);
   const postman = new Postman(tableAll[0]);
   postman.urls = url;
   const jsonStr = JSON.stringify(datas);
-  const response = await postman.post({ context: jsonStr });
+  let response = await postman.post({ context: jsonStr });
   if (response === false) {
     return false;
   }
+
+  /* ------ Below get update's datas ------ */
+  url = new URL(APP_TABLE_PATHNAME as string + '/api/v1/all', APP_TABLE_URL);
+  postman.urls = url;
+  response = await postman.get({ contentType: 'application/json; charset=utf-8' });
+  if (response === false) {
+    return false;
+  }
+
   return true;
 }
