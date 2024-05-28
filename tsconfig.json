@@ -49,6 +49,9 @@
       "@Handler/*": [
         "src/frontend/src/handlers/*",
       ],
+      "@ind": [
+        "src/backend/src/getId.ts"
+      ]
       // "@pages/*": [
       //   "./src/frontend/src/components/pages/*"
       // ],

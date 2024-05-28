@@ -46,8 +46,7 @@ class Postman {
       return false;
     }
 
-    const responseJson = await response.json();
-    return responseJson as object;
+    return true;
   }
 
   /**

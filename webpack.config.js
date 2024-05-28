@@ -115,7 +115,7 @@ module.exports = {
       "@Interfaces": path.resolve(__dirname, "src/frontend/src/interfaces.ts"),
       "@relevant": path.resolve(__dirname, "src/frontend/src/relevant"),
       "@Service": path.resolve(__dirname, "src/frontend/src/services"),
-      "@Handler": path.relative(__dirname, "src/frontend/src/handlers")
+      "@Handler": path.resolve(__dirname, "src/frontend/src/handlers"),
     }
   },
 

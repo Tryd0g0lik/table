@@ -10,6 +10,7 @@ const koaBody = require('koa-body');
 const productsFs = fs.readFileSync(path.resolve(__dirname, './data/products.json'));
 
 const items = JSON.parse(productsFs);
+let ind = 21;
 // const categories = require('./data/categories.json');
 // const categories = require('./data/categories.json')
 // const topSaleIds = [66, 65, 73];
@@ -27,9 +28,26 @@ const items = JSON.parse(productsFs);
 
 const fortune = (ctx, body = null, status = 200) => {
   // const delay = randomNumber(1, 10) * 1000;
+  if (status === 204) {
+    const ob = ctx.request.body;
 
+    const newData = {
+      id: ind,
+    }
+    const newDataObj = Object.create(newData);
+    const k = Object.keys(ob);
+    for (let i = 0; i < k.length; i++) {
+      newDataObj[k[i]] = ob[k[i]]
+    }
+
+    items[items.length] = newDataObj
+    console.warn(`[REQ_6]: ${JSON.stringify(ob)}`);
+    ind += 1
+  }
   const delay = 0;
   return new Promise((resolve, reject) => {
+
+
     setTimeout(() => {
       ctx.response.status = status;
       ctx.response.body = body;
@@ -64,11 +82,12 @@ router.get('/api/v1/all', async (ctx, next) => {
 // router.patch('/api/v1/correct/:id', async (ctx, next) => {
 // });
 
-router.post('/api/v1/add/ line', async (ctx, next) => {
+router.post('/api/v1/add/line', async (ctx, next) => {
 
-  console.warn(`[REQ_]: ${ctx.request.body}`);
-  const { owner: { name, job, company, location, lastlogin } } = JSON.parse(ctx.request.body);
-  if (!(typeof name), includes('string')) {
+  console.warn(`[REQ_]: ${JSON.stringify(ctx.request.body)}`);
+  const { name, job, company, location, lastlogin } = ctx.request.body;
+  console.warn(`[REQ_2]: ${JSON.stringify(ctx.request.body)}`);
+  if (!(typeof name).includes('string')) {
     return fortune(ctx, 'Bad Request: Name', 400);
   }
   if (!(typeof job).includes('string')) {
@@ -77,12 +96,14 @@ router.post('/api/v1/add/ line', async (ctx, next) => {
   if (!(typeof company).includes('string')) {
     return fortune(ctx, 'Bad Request: Company', 400);
   }
+
   if (!(typeof location).includes('string')) {
     return fortune(ctx, 'Bad Request: Location', 400);
   }
   if (!(typeof lastlogin).includes('string')) {
     return fortune(ctx, 'Bad Request: Lastlogin', 400);
   }
+
   // if (!Array.isArray(items)) {
   //   return fortune(ctx, 'Bad Request: Items', 400);
   // }

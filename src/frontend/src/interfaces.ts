@@ -1,4 +1,5 @@
 export interface F {
+  [x: string]: any
   name: string
   job: string
   company: string

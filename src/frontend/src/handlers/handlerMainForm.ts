@@ -2,10 +2,10 @@ import { F, RequestHeaders } from '@Interfaces';
 import relevantForm from '@relevant/relevantForm';
 import Postman from '@ObjectDevelopment/requests';
 import React from 'react';
-const APP_TABLE_URL = ((typeof process.env.APP_TABLE_URL).includes('string')) ? process.env.APP_TABLE_URL : '';
+const APP_TABLE_URL = ((typeof process.env.APP_TABLE_URL).includes('string')) ? process.env.APP_TABLE_URL : 'http://localhost:7070';
 const APP_TABLE_PATHNAME = ((typeof process.env.APP_TABLE_PATHNAME).includes('string')) ? process.env.APP_TABLE_PATHNAME : '';
 
-const datas: F = {
+let datas: F = {
   name: '',
   job: '',
   company: '',
@@ -17,17 +17,27 @@ const keysArr = Array.from(Object.keys(datas));
 // relevantForm
 export default async function handlerButtonCick(e: React.MouseEvent<HTMLDivElement>): Promise<boolean> {
   e.preventDefault();
-  const relatedTarget = e.relatedTarget as HTMLElement;
+  if (!((e.target as HTMLElement).tagName).includes('BUTTON')) {
+    return false;
+  }
+
+  const relatedTarget = e.currentTarget as HTMLElement;
   const inputAll = relatedTarget.querySelectorAll('input');
   if ((inputAll.length === null)) {
     return false;
   }
 
+  // const newdatas = Object.create(datas);
   for (let i = 0; i < keysArr.length; i++) {
-    if (inputAll[i].getAttribute(keysArr[i]) !== null) {
-      datas.keysArr[i] = inputAll[i].getAttribute(keysArr[i]);
-    }
+    // if (inputAll[i].getAttribute(keysArr[i]) !== null) {
+    // const { name, job, company, location, lastlogin } = keysArr;
+    const ind = keysArr.indexOf(keysArr[i]);
+    // datas.keysArr[ind] = inputAll[ind].value;
+
+    datas[keysArr[ind]] = inputAll[ind].value;
+    // }
   }
+
   const valeuArr = Array.from(Object.values(datas));
   const truefalse = relevantForm(valeuArr);
   if (!truefalse) {

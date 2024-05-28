@@ -1,9 +1,10 @@
 import React from 'react';
 import FormsFC from './Forms';
+import handlerButtonCick from '@Handler/handlerMainForm';
 
 export default function TableFC(): React.JSX.Element {
   return (
-    <div className="overflow-x-auto">
+    <div onClick={handlerButtonCick} className="overflow-x-auto">
       <table className="main table table-xs">
         <thead>
           <tr>

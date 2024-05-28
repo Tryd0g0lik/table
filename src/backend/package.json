@@ -22,7 +22,9 @@
     "react-scripts": "^5.0.1"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.8",
     "koa-logger": "^3.2.1",
+    "uuid": "^9.0.1",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   }
