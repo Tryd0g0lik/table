@@ -62,5 +62,13 @@ export default async function handlerButtonCick(e: React.MouseEvent<HTMLDivEleme
     return false;
   }
 
+  const tbody = relatedTarget.querySelector('table.main tbody');
+  if (tbody === null) {
+    const err = new Error('What something wrong, tbody not found was.');
+    err.name = '[handlerButtonCick]';
+    throw err;
+  }
+
+  // tbod
   return true;
 }
