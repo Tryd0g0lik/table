@@ -34,12 +34,12 @@
       // "@Websocket": [
       //   "src/scripts/websockets/index.ts"
       // ],
-      // "@Interfaces": [
-      //   "src/interface.ts"
-      // ],
-      // "@htmlTemplates/*": [
-      //   "src/scripts/templates/*"
-      // ],
+      "@Interfaces": [
+        "src/frontend/src/interfaces.ts"
+      ],
+      "@relevant/*": [
+        "src/frontend/src/relevant/*"
+      ],
       // "@Service/*": [
       //   "src/scripts/chat/*"
       // ]
