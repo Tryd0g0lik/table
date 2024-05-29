@@ -4,17 +4,20 @@ import handlerButtonCick from '@Handler/handlerMainForm';
 import { F } from '@Interfaces';
 import RowFC from './Row';
 
+const request = async (e: MouseEvent): Promise<F | F[] | boolean> => {
+  const result = await handlerButtonCick(e);
+  if ((typeof result).includes('boolean')) {
+    return false;
+  };
+
+  return result as F[];
+};
+
 export default function TableFC(prop: F | F[]): React.JSX.Element {
+  // ПЕРЕЗАГРУЗКА СТРАНИЦЫ !!!
+  const [props, setProps] = useState<F | F[] | null>(null);
+  let i = 0;
   useEffect(() => {
-    async function request(e: MouseEvent): Promise<F | F[]> {
-      const result = await handlerButtonCick(e);
-      if ((typeof result).includes('boolean')) {
-        return;
-      };
-
-      return result as F[];
-    };
-
     const div = document.querySelector('.full');
     if (div === null) {
       return;
@@ -30,22 +33,28 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
       return;
     };
 
-    async function requestFull(e: MouseEvent): Promise<void> {
-      const i = 0; // дублирует
+    const requestFull = async (e: MouseEvent): Promise<void> => {
+      // дублирует
       if (!((e.target as HTMLElement).tagName).includes('BUTTON')) {
         return;
       }
       e.preventDefault();
       const resp = await request(e);
-      const newresp = Object.values(<RowFC {...resp} />);
-
-      (tbody as HTMLTableSectionElement).insertAdjacentHTML('beforeend', newresp[0]);
+      if ((typeof resp) === 'boolean') {
+        return;
+      }
+      const newresp = { ...resp as F | F[] };
+      if (i !== 0) {
+        return;
+      }
+      i += 1;
+      setProps(newresp);
     };
 
     (div as HTMLDivElement).removeEventListener('click', requestFull);
     (div as HTMLDivElement).addEventListener('click', requestFull);
   }, []);
-
+  const res = ((props === undefined) || (props === null)) ? prop : props;
   return (
     <div className="full overflow-x-auto">
       <table className="main table table-xs">
@@ -62,7 +71,7 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
           </tr>
         </thead>
         <tbody>
-          <RowFC {...prop} />
+          <RowFC {...res} />
         </tbody>
         <tfoot>
           <tr>

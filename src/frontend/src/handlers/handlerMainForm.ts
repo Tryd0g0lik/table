@@ -5,7 +5,7 @@ import React from 'react';
 import { APP_TABLE_PATHNAME, APP_TABLE_URL } from '@Service/env';
 // const APP_TABLE_PATHNAME = ((typeof process.env.APP_TABLE_PATHNAME).includes('string')) ? process.env.APP_TABLE_PATHNAME : '';
 
-let datas: F = {
+const datas: F = {
   name: '',
   job: '',
   company: '',
@@ -13,11 +13,15 @@ let datas: F = {
   lastlogin: ''
 };
 const keysArr = Array.from(Object.keys(datas));
-
+let ind_ = 0;
 export default async function handlerButtonCick(e: MouseEvent): Promise<boolean | object> {
   e.preventDefault();
   if (!((e.target as HTMLElement).tagName).includes('BUTTON')) {
     return false;
+  }
+  if (ind_ === 0) {
+    ind_ += 1;
+    return;
   }
 
   const relatedTarget = e.currentTarget as HTMLElement;
@@ -46,9 +50,8 @@ export default async function handlerButtonCick(e: MouseEvent): Promise<boolean 
   }
 
   let url = new URL(APP_TABLE_PATHNAME as string + '/api/v1/add/line', APP_TABLE_URL);
-  // const postman = new Postman(tableAll[0]);
   const postman = new Postman(url);
-  // postman.urls = url;
+
   const jsonStr = JSON.stringify(datas);
   let response = await postman.post({ context: jsonStr });
   if (response === false) {
