@@ -9,22 +9,8 @@ const cors = require('koa2-cors');
 const koaBody = require('koa-body');
 const productsFs = fs.readFileSync(path.resolve(__dirname, './data/products.json'));
 
-const items = JSON.parse(productsFs);
+let items = JSON.parse(productsFs);
 let ind = 21;
-// const categories = require('./data/categories.json');
-// const categories = require('./data/categories.json')
-// const topSaleIds = [66, 65, 73];
-// const moreCount = 6;
-
-// const itemBasicMapper = item => ({
-//   id: item.id,
-//   name: item.name,
-//   job: item.job,
-//   company: item.company,
-//   location: item.location,
-//   lastlogin: item.lastlogin
-// });
-
 
 const fortune = (ctx, body = null, status = 200) => {
   // const delay = randomNumber(1, 10) * 1000;
@@ -46,6 +32,9 @@ const fortune = (ctx, body = null, status = 200) => {
   }
   if (status === 200) {
     body = JSON.stringify(items);
+  }
+  if (status === 301) {
+    body = null;
   }
   const delay = 0;
   return new Promise((resolve, reject) => {
@@ -78,9 +67,16 @@ router.get('/api/v1/all', async (ctx, next) => {
   return fortune(ctx, items);
 });
 
-// router.delete('/api/items', async (ctx, next) => {
+router.del('/api/v1/remove/', async (ctx, next) => {
+  const id = Number(ctx.params.id);
+  const newItems = items.find(o => o.id !== id);
+  if (newItems === undefined) {
+    return fortune(ctx, 'Not found', 404);
+  }
+  items = newItems;
+  return fortune(ctx, newItems, 301);
 
-// });
+});
 
 // router.patch('/api/v1/correct/:id', async (ctx, next) => {
 // });

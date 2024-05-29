@@ -1,3 +1,4 @@
+import handlerClickRemove from '@Handler/handlerButtonRemove';
 import { F } from '@Interfaces';
 import React from 'react';
 
@@ -9,7 +10,7 @@ export default function RowFC(prop: F | F[] | object): React.JSX.Element {
       {
         Array.isArray(prop)
           ? prop.map((item, index) => (
-            <tr data-ind={item.id} key={index}>
+            <tr onClick={handlerClickRemove} data-ind={item.id} key={index}>
               <th>{item.id}</th>
               <td>
                 <div className="skeleton w-14 h-14"></div>
@@ -23,7 +24,7 @@ export default function RowFC(prop: F | F[] | object): React.JSX.Element {
             </tr>
           ))
           : Array.from(Object.values(prop)).map((item, index) => (
-            <tr data-ind={item.id} key={index}>
+            <tr onClick={handlerClickRemove} data-ind={item.id} key={index}>
               <th>{item.id}</th>
               <td>
                 <div className="skeleton w-14 h-14"></div>
