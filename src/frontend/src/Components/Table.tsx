@@ -5,7 +5,7 @@ import { F } from '@Interfaces';
 import RowFC from './Row';
 import relevantButton from '@relevant/relevantButton';
 
-const request = async (e: MouseEvent): Promise<F | F[] | boolean> => {
+const handlerRequest = async (e: MouseEvent): Promise<F | F[] | boolean> => {
   const result = await handlerButtonCick(e);
   if ((typeof result).includes('boolean')) {
     return false;
@@ -34,7 +34,7 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
       return;
     };
 
-    const requestFull = async (e: MouseEvent): Promise<void> => {
+    const handlerRequestFull = async (e: MouseEvent): Promise<void> => {
       // дублирует
       const target = e.target as HTMLElement;
 
@@ -45,7 +45,7 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
 
       e.preventDefault();
 
-      const resp = await request(e);
+      const resp = await handlerRequest(e);
       if ((typeof resp) === 'boolean') {
         return;
       }
@@ -57,8 +57,8 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
       setProps(newresp);
     };
 
-    (div as HTMLDivElement).removeEventListener('click', requestFull);
-    (div as HTMLDivElement).addEventListener('click', requestFull);
+    (div as HTMLDivElement).removeEventListener('click', handlerRequestFull);
+    (div as HTMLDivElement).addEventListener('click', handlerRequestFull);
   }, []);
   const res = ((props === undefined) || (props === null)) ? prop : props;
   return (
