@@ -14,7 +14,7 @@ const datas: F = {
 };
 const keysArr = Array.from(Object.keys(datas));
 let ind_ = 0;
-export default async function handlerButtonCick(e: MouseEvent): Promise<boolean | object> {
+export default async function handlerButtonCickAdd(e: MouseEvent): Promise<boolean | object> {
   e.preventDefault();
   if (!((e.target as HTMLElement).tagName).includes('BUTTON')) {
     return false;
