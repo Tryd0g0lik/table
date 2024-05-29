@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import FormsFC from './Forms';
-import handlerButtonCick from '@Handler/handlerMainForm';
+import handlerRequest from '@Handler/handlerButtonAdd';
 import { F } from '@Interfaces';
 import RowFC from './Row';
 import relevantButton from '@relevant/relevantButton';
-
-const handlerRequest = async (e: MouseEvent): Promise<F | F[] | boolean> => {
-  const result = await handlerButtonCick(e);
-  if ((typeof result).includes('boolean')) {
-    return false;
-  };
-
-  return result as F[];
-};
 
 export default function TableFC(prop: F | F[]): React.JSX.Element {
   // ПЕРЕЗАГРУЗКА СТРАНИЦЫ !!!
