@@ -11,12 +11,9 @@ import getCookie from '@Service/cookies';
 }`
  */
 class Postman {
-  // element: HTMLDivElement | HTMLFormElement | HTMLElement;
 
   urls: string | object;
 
-  // constructor(element: HTMLDivElement | HTMLFormElement | HTMLElement) {
-  //   this.element = element;
   constructor(url: string | object) {
     this.urls = url;
   }

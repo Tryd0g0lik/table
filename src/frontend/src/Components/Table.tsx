@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import FormsFC from './Forms';
 import handlerButtonCick from '@Handler/handlerMainForm';
 import { F } from '@Interfaces';
@@ -21,7 +21,6 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
           </tr>
         </thead>
         <tbody>
-
           {
             Array.isArray(prop)
               ? prop.map((item, index) => (
@@ -52,25 +51,7 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
                   <th></th>
                 </tr>
               ))
-
-            // prop === null
-            //   ? null
-            //   : (
-            //     <tr>
-            //       <th>{prop.id}</th>
-            //       <td>
-            //         <div className="skeleton w-14 h-14"></div>
-            //       </td>
-            //       <th>{prop.name}</th>
-            //       <th>{prop.job}</th>
-            //       <th>{prop.company}</th>
-            //       <th>{prop.location}</th>
-            //       <th>{prop.lastlogin}</th>
-            //       <th></th>
-            //     </tr>
-            //   )
           }
-
         </tbody>
         <tfoot>
           <tr>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { APP_TABLE_PATHNAME, APP_TABLE_URL } from '@Service/env';
+import { APP_TABLE_URL } from '@Service/env';
 import TableFC from './Components/Table';
 import Postman from '@ObjectDevelopment/requests';
 import { F } from '@Interfaces';
