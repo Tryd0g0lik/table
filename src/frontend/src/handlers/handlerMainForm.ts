@@ -2,8 +2,8 @@ import { F, RequestHeaders } from '@Interfaces';
 import relevantForm from '@relevant/relevantForm';
 import Postman from '@ObjectDevelopment/requests';
 import React from 'react';
-const APP_TABLE_URL = ((typeof process.env.APP_TABLE_URL).includes('string')) ? process.env.APP_TABLE_URL : 'http://localhost:7070';
-const APP_TABLE_PATHNAME = ((typeof process.env.APP_TABLE_PATHNAME).includes('string')) ? process.env.APP_TABLE_PATHNAME : '';
+import { APP_TABLE_PATHNAME, APP_TABLE_URL } from '@Service/env';
+// const APP_TABLE_PATHNAME = ((typeof process.env.APP_TABLE_PATHNAME).includes('string')) ? process.env.APP_TABLE_PATHNAME : '';
 
 let datas: F = {
   name: '',
@@ -46,8 +46,9 @@ export default async function handlerButtonCick(e: React.MouseEvent<HTMLDivEleme
   }
 
   let url = new URL(APP_TABLE_PATHNAME as string + '/api/v1/add/line', APP_TABLE_URL);
-  const postman = new Postman(tableAll[0]);
-  postman.urls = url;
+  // const postman = new Postman(tableAll[0]);
+  const postman = new Postman(url);
+  // postman.urls = url;
   const jsonStr = JSON.stringify(datas);
   let response = await postman.post({ context: jsonStr });
   if (response === false) {

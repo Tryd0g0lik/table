@@ -11,13 +11,14 @@ import getCookie from '@Service/cookies';
 }`
  */
 class Postman {
-  element: HTMLDivElement | HTMLFormElement;
+  // element: HTMLDivElement | HTMLFormElement | HTMLElement;
 
   urls: string | object;
 
-  constructor(element: HTMLDivElement | HTMLFormElement) {
-    this.element = element;
-    this.urls = '';
+  // constructor(element: HTMLDivElement | HTMLFormElement | HTMLElement) {
+  //   this.element = element;
+  constructor(url: string | object) {
+    this.urls = url;
   }
 
   async post(props: RequestHeaders): Promise<object | boolean> {
