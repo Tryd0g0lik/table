@@ -14,7 +14,7 @@ let datas: F = {
 };
 const keysArr = Array.from(Object.keys(datas));
 
-export default async function handlerButtonCick(e: React.MouseEvent<HTMLDivElement>): Promise<boolean> {
+export default async function handlerButtonCick(e: MouseEvent): Promise<boolean | object> {
   e.preventDefault();
   if (!((e.target as HTMLElement).tagName).includes('BUTTON')) {
     return false;
@@ -62,14 +62,6 @@ export default async function handlerButtonCick(e: React.MouseEvent<HTMLDivEleme
   if (response === false) {
     return false;
   }
-
-  const tbody = relatedTarget.querySelector('table.main tbody');
-  if (tbody === null) {
-    const err = new Error('What something wrong, tbody not found was.');
-    err.name = '[handlerButtonCick]';
-    throw err;
-  }
-
   // tbod
-  return true;
+  return response;
 }
