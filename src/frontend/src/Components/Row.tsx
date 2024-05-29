@@ -9,7 +9,7 @@ export default function RowFC(prop: F | F[] | object): React.JSX.Element {
       {
         Array.isArray(prop)
           ? prop.map((item, index) => (
-            <tr key={index}>
+            <tr data-ind={item.id} key={index}>
               <th>{item.id}</th>
               <td>
                 <div className="skeleton w-14 h-14"></div>
@@ -19,11 +19,11 @@ export default function RowFC(prop: F | F[] | object): React.JSX.Element {
               <th>{item.company}</th>
               <th>{item.location}</th>
               <th>{item.lastlogin}</th>
-              <th></th>
+              <th><button data-name='remove' className="remove btn btn-outline">Default</button></th>
             </tr>
           ))
           : Array.from(Object.values(prop)).map((item, index) => (
-            <tr key={index}>
+            <tr data-ind={item.id} key={index}>
               <th>{item.id}</th>
               <td>
                 <div className="skeleton w-14 h-14"></div>
@@ -33,7 +33,7 @@ export default function RowFC(prop: F | F[] | object): React.JSX.Element {
               <th>{item.company}</th>
               <th>{item.location}</th>
               <th>{item.lastlogin}</th>
-              <th></th>
+              <th><button data-name='remove' className="remove btn btn-outline">Default</button></th>
             </tr>
           ))
       }
