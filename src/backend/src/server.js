@@ -21,6 +21,8 @@ const fortune = async (ctx, body = null, status = 200) => {
       newDataObj[k[i]] = ob[k[i]]
     }
 
+    // items[items.length] = newDataObj
+    console.warn(`[REQ_6]: ${JSON.stringify(ob)}`);
     ind += 1
     try {
       productsFs = await new Promise((resolve, reject) => {
@@ -35,7 +37,9 @@ const fortune = async (ctx, body = null, status = 200) => {
         });
       });
 
+      console.log(`/* ----^----${JSON.stringify(newDataObj)}--------- */`);
       productsFs.push(newDataObj)
+      console.log(`/* ----^----${JSON.stringify(productsFs)}--------- */`);
       new Promise((resolve, reject) => {
         fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(productsFs), (err) => {
           if (err) {
@@ -51,7 +55,6 @@ const fortune = async (ctx, body = null, status = 200) => {
       ctx.response.body = 'Internal Server Error';
       return;
     }
-
   }
   if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('/api/v1/all'))) {
     try {

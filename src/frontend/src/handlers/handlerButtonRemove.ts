@@ -21,8 +21,6 @@ const handlerClickRemove = async (e: React.MouseEvent): Promise<boolean> => {
   const result = new Postman(url);
   await result.delete();
   return true;
-  // if ((typeof result).includes('boolean')) {
-  //   return false;
-  // };
+
 };
 export default handlerClickRemove;
