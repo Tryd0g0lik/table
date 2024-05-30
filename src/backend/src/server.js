@@ -10,26 +10,54 @@ const koaBody = require('koa-body');
 // const productsFs = fs.readFileSync(path.resolve(__dirname, './data/products.json'));
 
 // let items = JSON.parse(productsFs);
-let ind = 21;
+let ind = 19;
 
 const fortune = async (ctx, body = null, status = 200) => {
-// const delay = randomNumber(1, 10) * 1000; 
   // console.log(`/* --------${JSON.stringify(ctx.originalUrl)}--------- */`);
   if ((status === 204)) {
     const ob = ctx.request.body;
 
-    const newData = {
-      id: ind,
-    }
+    const newData = {}
     const newDataObj = Object.create(newData);
     const k = Object.keys(ob);
+    newDataObj.id = ind
     for (let i = 0; i < k.length; i++) {
       newDataObj[k[i]] = ob[k[i]]
     }
 
-    items[items.length] = newDataObj
-    console.warn(`[REQ_6]: ${JSON.stringify(ob)}`);
     ind += 1
+    try {
+      productsFs = await new Promise((resolve, reject) => {
+        fs.readFile(path.resolve(__dirname, './data/products.json'), 'utf8', (err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+            let items = JSON.parse(data);
+            const newItems = items;
+            resolve(newItems);
+          }
+        });
+      });
+
+      console.log(`/* ----^----${JSON.stringify(newDataObj)}--------- */`);
+      productsFs.push(newDataObj)
+      console.log(`/* ----^----${JSON.stringify(productsFs)}--------- */`);
+      new Promise((resolve, reject) => {
+        fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(productsFs), (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
+    } catch (err) {
+      console.error('Error writing or reading file:', err);
+      ctx.response.status = 500;
+      ctx.response.body = 'Internal Server Error';
+      return;
+    }
+
   }
   if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('/api/v1/all'))) {
     try {
@@ -55,8 +83,6 @@ const fortune = async (ctx, body = null, status = 200) => {
   }
   if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('api/v1/remove/'))) {
     const ind = Number(ctx.originalUrl.split('=')[1]);
-    console.log(`/* --------${status}--------- */`);
-    // console.log(`/* ------------${JSON.stringify(newItems)}----- */`);
     try {
       productsFs = await new Promise((resolve, reject) => {
         fs.readFile(path.resolve(__dirname, './data/products.json'), 'utf8', (err, data) => {
@@ -67,8 +93,6 @@ const fortune = async (ctx, body = null, status = 200) => {
             let items = JSON.parse(data);
 
             const newItems = items.filter(o => o.id !== ind);
-            console.log(`/* --------${items[0].id}-${ctx.originalUrl.split('=')[1]}-------- */`);
-            // console.log(`/* ------------${JSON.stringify(newItems)}----- */`);
             fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(newItems), (err) => {
               if (err) {
                 reject(err);
@@ -120,7 +144,7 @@ router.get('/api/v1/all', async (ctx, next) => {
 });
 
 router.del('/api/v1/remove/', async (ctx, next) => {
-  return fortune(ctx, 301);
+  return fortune(ctx, 200);
 
 });
 
@@ -128,10 +152,7 @@ router.del('/api/v1/remove/', async (ctx, next) => {
 // });
 
 router.post('/api/v1/add/line', async (ctx, next) => {
-
-  console.warn(`[REQ_]: ${JSON.stringify(ctx.request.body)}`);
   const { name, job, company, location, lastlogin } = ctx.request.body;
-  console.warn(`[REQ_2]: ${JSON.stringify(ctx.request.body)}`);
   if (!(typeof name).includes('string')) {
     return fortune(ctx, 'Bad Request: Name', 400);
   }
