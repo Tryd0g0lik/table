@@ -4,11 +4,33 @@ import handlerRequest from '@Handler/handlerButtonAdd';
 import { F } from '@Interfaces';
 import RowFC from './Row';
 import relevantButton from '@relevant/relevantButton';
+let i = 0;
+;
+const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> => {
+  const target = e.target as HTMLElement;
+  // e.preventDefault();
+  const truefalse = relevantButton(target, 'add', 'BUTTON');
+  if (!truefalse) {
+    return;
+  }
 
+  const resp = await handlerRequest(e);
+  if ((typeof resp) === 'boolean') {
+    return;
+  }
+  const newresp = { ...resp as F | F[] };
+  if (i !== 0) {
+    return;
+  }
+  i += 1;
+  setprops(resp);
+};
 export default function TableFC(prop: F | F[]): React.JSX.Element {
-  // ПЕРЕЗАГРУЗКА СТРАНИЦЫ !!!
   const [props, setProps] = useState<F | F[] | null>(null);
-  let i = 0;
+  const updateStates = (props) => {
+    setProps(props);
+  };
+
   useEffect(() => {
     const div = document.querySelector('.full');
     if (div === null) {
@@ -25,28 +47,10 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
       return;
     };
 
-    const handlerRequestFull = async (e: MouseEvent): Promise<void> => {
-      const target = e.target as HTMLElement;
-      e.preventDefault();
-      const truefalse = relevantButton(target, 'add', 'BUTTON');
-      if (!truefalse) {
-        return;
-      }
-
-      const resp = await handlerRequest(e);
-      if ((typeof resp) === 'boolean') {
-        return;
-      }
-      const newresp = { ...resp as F | F[] };
-      if (i !== 0) {
-        return;
-      }
-      i += 1;
-      setProps(newresp);
-    };
-
-    (div as HTMLDivElement).removeEventListener('click', handlerRequestFull);
-    (div as HTMLDivElement).addEventListener('click', handlerRequestFull);
+    const handlerState = handlerRequestFull(updateStates);
+    i = 0;
+    (div as HTMLDivElement).removeEventListener('click', handlerState);
+    (div as HTMLDivElement).addEventListener('click', handlerState);
   }, []);
   const res = ((props === undefined) || (props === null)) ? prop : props;
   return (

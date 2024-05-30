@@ -19,14 +19,13 @@ export default async function handlerButtonCickAdd(e: MouseEvent): Promise<boole
   if (!((e.target as HTMLElement).tagName).includes('BUTTON')) {
     return false;
   }
-  if (ind_ === 0) {
-    ind_ += 1;
-    return;
+  if (ind_ !== 0) {
+    return false;
   }
-
+  ind_ += 1;
   const relatedTarget = e.currentTarget as HTMLElement;
   const inputAll = relatedTarget.querySelectorAll('input');
-  if ((inputAll.length === null)) {
+  if ((inputAll.length === 0)) {
     return false;
   }
 
