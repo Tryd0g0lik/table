@@ -23,20 +23,20 @@ const fortune = async (ctx, body = null, status = 200) => {
             reject(err);
           } else {
             let items = JSON.parse(data);
-
             const newItems = items;
 
             let ind = 0;
             const indArr = Array.from(Object.keys(items))
             const newInd = indArr[indArr.length - 1];
-            // console.log(`/* ----^----${Number(newInd)}--------- */`);
+
             ind = Number(newInd)
 
             newDataObj.id = ind + 1;
             for (let i = 0; i < k.length; i++) {
               newDataObj[k[i]] = ob[k[i]]
             }
-            newItems.push(newDataObj)
+
+            newItems.push(newDataObj) // new file
             fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(newItems), (err) => {
               if (err) {
                 reject(err);
@@ -48,34 +48,7 @@ const fortune = async (ctx, body = null, status = 200) => {
           }
         });
       });
-    } catch (err) {
-      console.error('Error writing or reading file:', err);
-      ctx.response.status = 500;
-      ctx.response.body = 'Internal Server Error';
-      return;
-    }
-    try {
-      // let ind = 0;
-      // const indArr = Array.from(Object.keys(productsFs))
-      // const newInd = indArr[indArr.length - 1];
-      // // console.log(`/* ----^----${Number(newInd)}--------- */`);
-      // ind = Number(newInd)
 
-      // newDataObj.id = ind + 1;
-      // for (let i = 0; i < k.length; i++) {
-      //   newDataObj[k[i]] = ob[k[i]]
-      // }
-      // productsFs.push(newDataObj)
-
-      // await new Promise((resolve, reject) => {
-      //   fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(productsFs), (err) => {
-      //     if (err) {
-      //       reject(err);
-      //     } else {
-      //       resolve();
-      //     }
-      //   });
-      // });
     } catch (err) {
       console.error('Error writing or reading file:', err);
       ctx.response.status = 500;
@@ -83,7 +56,8 @@ const fortune = async (ctx, body = null, status = 200) => {
       return;
     }
   }
-  if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('/api/v1/all'))) {
+
+  else if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('/api/v1/all'))) {
     try {
       const items = await new Promise((resolve, reject) => {
         fs.readFile(path.resolve(__dirname, './data/products.json'), 'utf8', (err, data) => {
@@ -103,9 +77,9 @@ const fortune = async (ctx, body = null, status = 200) => {
       ctx.response.body = 'Internal Server Error';
       return;
     }
-
   }
-  if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('api/v1/remove/'))) {
+
+  else if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('api/v1/remove/'))) {
     const ind = Number(ctx.originalUrl.split('=')[1]);
     try {
       productsFs = await new Promise((resolve, reject) => {
@@ -135,6 +109,7 @@ const fortune = async (ctx, body = null, status = 200) => {
       return;
     }
   }
+
   const delay = 0;
   return new Promise((resolve, reject) => {
     setTimeout(() => {

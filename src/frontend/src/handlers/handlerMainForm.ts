@@ -1,9 +1,7 @@
 import { F, RequestHeaders } from '@Interfaces';
 import relevantForm from '@relevant/relevantForm';
 import Postman from '@ObjectDevelopment/requests';
-import React from 'react';
 import { APP_TABLE_PATHNAME, APP_TABLE_URL } from '@Service/env';
-// const APP_TABLE_PATHNAME = ((typeof process.env.APP_TABLE_PATHNAME).includes('string')) ? process.env.APP_TABLE_PATHNAME : '';
 
 const datas: F = {
   name: '',
@@ -72,7 +70,7 @@ export default async function handlerButtonCickAdd(e: MouseEvent): Promise<boole
   if (response === false) {
     return false;
   }
-  // tbod
+
   Array.from(inputAll_).forEach((item) => {
     item.value = '';
   });

@@ -100,7 +100,6 @@ class Postman {
   * */
   async delete(): Promise<string> {
     const url = this.urls;
-    // debugger
     const response = await fetch(url, {
       method: 'DELETE',
       'X-CSRFToken': getCookie('csrftoken'),
@@ -109,7 +108,6 @@ class Postman {
       cache: 'no-cache',
       mode: 'cors'
     });
-    // debugger
     /*   */
     if (!response.ok as boolean) {
       const err = new Error(String(response.ok));

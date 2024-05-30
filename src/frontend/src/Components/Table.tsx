@@ -7,16 +7,9 @@ import relevantButton from '@relevant/relevantButton';
 import { storeGetstate, storeDispatch } from '../reduxs/store';
 import { APP_TABLE_URL } from '@Service/env';
 import Postman from '@ObjectDevelopment/requests';
-let i = 0;
+let i = 0; // copy drop
 
-// const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> => {
-
-
-/* ---- */
-// const updateStates = (setprops) => (props): void => {
-//   i = 0;
-//   setprops(props);
-// };
+/* ---- Handler ADDING ----- */
 const handlerRequestFull = async (e: MouseEvent): Promise<F | F[] | boolean> => {
   const target = e.target as HTMLElement;
   e.preventDefault();
@@ -24,7 +17,7 @@ const handlerRequestFull = async (e: MouseEvent): Promise<F | F[] | boolean> => 
   if (!truefalse) {
     return false;
   }
-  console.log('TTTTT');
+
   const resp = await handlerRequest(e);
   if ((typeof resp) === 'boolean') {
     return false;
@@ -33,22 +26,20 @@ const handlerRequestFull = async (e: MouseEvent): Promise<F | F[] | boolean> => 
   if (i !== 0) {
     return false;
   }
+
   i += 1;
   if ((resp === false) || (resp === null)) {
     return false;
   }
-
-  // storeDispatch(resp)
-  // setprops(resp);
   return resp;
 };
+
 /* ---- */
 export default function TableFC(): React.JSX.Element {
   const [props, setProps] = useState<F | F[] | null>(null);
-  // const setPropsNew = updateStates(setProps);
 
-
-  const test = () => {
+  /* ------ Redux ------ */
+  const redux = () => {
     const timeout = setTimeout(() => {
       const getTotalStore = storeGetstate();
       const props_ = getTotalStore.props;
@@ -62,21 +53,13 @@ export default function TableFC(): React.JSX.Element {
     }, 100);
   };
 
-  // fetchData(setPropsNew);
-
   useEffect(() => {
     const div = document.querySelector('.full');
     if (div === null) {
       return;
     }
-    // const table = div.querySelector('table.main');
-    // if (table === null) {
-    //   return;
-    // };
 
-    // const tbody = table.querySelector('tbody');
-    // if (tbody === null) {
-    //   return;
+    /* ------ Handler Remove ------ */
     const nandlerRemove = async (e): Promise<void> => {
       e.preventDefault();
       const url = new URL('/api/v1/all', APP_TABLE_URL);
@@ -84,17 +67,10 @@ export default function TableFC(): React.JSX.Element {
       const res = await postman.get({ contentType: 'application/json; charset=utf-8' });
       setProps(res as F | F[]);
     };
-    // };
-    // const handlerState = handlerRequestFull(setProps);
-    // (div as HTMLDivElement).removeEventListener('click', async (e) => {
-    //   e.preventDefault();
-    //   const res = await handlerRequestFull(e);
-    //   setProps(res as F | F[]);
-    // });
     (div as HTMLDivElement).removeEventListener('update', nandlerRemove);
     (div as HTMLDivElement).addEventListener('update', nandlerRemove);
 
-    test();
+    redux();
   }, []);
   const handlerState = async (e) => {
     e.preventDefault();
