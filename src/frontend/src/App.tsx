@@ -1,48 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
-import { APP_TABLE_URL } from '@Service/env';
 import TableFC from './Components/Table';
+import RowFC from './Components/Row';
+import { APP_TABLE_URL } from '@Service/env';
 import Postman from '@ObjectDevelopment/requests';
-import { F } from '@Interfaces';
+
+import { storeDispatch } from './reduxs/store';
+
 const url = new URL('/api/v1/all', APP_TABLE_URL);
 const postman = new Postman(url);
 
-async function request(obj: typeof postman): Promise<F | F[]> {
-  const res = await obj.get({ contentType: 'application/json; charset=utf-8' });
-  return res as F | F[];
-}
-const zeroDatas = {
-  name: '',
-  job: '',
-  company: '',
-  location: '',
-  lastlogin: ''
+const fetchData = async (): Promise<any> => {
+  try {
+    const result = await postman.get({ contentType: 'application/json; charset=utf-8' });
+    return result;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  };
+};
+/* ------ Redux ------ */
+const setUserCategory = async (): Promise<void> => {
+  const state = await fetchData();
+  const tables = {
+    type: 'TEBLE',
+    props: state.props
+  };
+
+  storeDispatch({ ...tables });
 };
 
 function App(): React.JSX.Element {
-  const [prop, setProp] = useState<F | F[]>(zeroDatas);
-
-  useEffect(() => {
-    const tableTbody = document.querySelector('table.main tbody');
-    if (tableTbody === null) {
-      return;
-    }
-
-    postman.urls = url;
-
-    async function fetchData(): Promise<boolean> {
-      try {
-        const result = await request(postman);
-        setProp(result);
-        return true;
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-      return true;
-    };
-    fetchData();
-  }, []);
-
+  console.log('TEST:');
+  setUserCategory();
   return (
     <>
       <div className='h1'>
@@ -50,7 +39,7 @@ function App(): React.JSX.Element {
           Hello world!
         </h1 >
       </div>
-      <TableFC {...prop} />
+      <TableFC />
     </>
   );
 }

@@ -4,8 +4,9 @@ import handlerRequest from '@Handler/handlerButtonAdd';
 import { F } from '@Interfaces';
 import RowFC from './Row';
 import relevantButton from '@relevant/relevantButton';
+import { storeGetstate, storeDispatch } from '../reduxs/store';
 let i = 0;
-;
+
 const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> => {
   const target = e.target as HTMLElement;
   // e.preventDefault();
@@ -18,22 +19,39 @@ const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> =>
   if ((typeof resp) === 'boolean') {
     return;
   }
-  const newresp = { ...resp as F | F[] };
+
   if (i !== 0) {
     return;
   }
   i += 1;
+  // setprops(resp);
+  // const tables = {
+  //   type: 'TEBLE',
+  //   props: resp
+  // };
+
+  // storeDispatch({ ...tables });
+  // const getTotalStore = storeGetstate();
   setprops(resp);
 };
-export default function TableFC(prop: F | F[]): React.JSX.Element {
+
+/* ---- */
+// const updateStates = (setprops) => (props): void => {
+//   i = 0;
+//   setprops(props);
+// };
+
+/* ---- */
+export default function TableFC(): React.JSX.Element {
   const [props, setProps] = useState<F | F[] | null>(null);
-  const updateStates = (props) => {
-    i = 0;
-    setProps(props);
-  };
+  // const setPropsNew = updateStates(setProps);
+
+  // fetchData(setPropsNew);
 
   useEffect(() => {
-    updateStates(prop);
+    const getTotalStore = storeGetstate();
+    const props_ = getTotalStore.tables.props;
+    setProps(props_);
     const div = document.querySelector('.full');
     if (div === null) {
       return;
@@ -48,13 +66,11 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
       return;
     };
 
-    const handlerState = handlerRequestFull(updateStates);
+    const handlerState = handlerRequestFull(setProps);
 
     (div as HTMLDivElement).removeEventListener('click', handlerState);
     (div as HTMLDivElement).addEventListener('click', handlerState);
   }, []);
-
-  // const res = props; // ((props === undefined) || (props === null)) ? prop : props;
 
   return (
     <div className="full overflow-x-auto">
