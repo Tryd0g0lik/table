@@ -18,18 +18,48 @@ const fortune = async (ctx, body = null, status = 200) => {
   if ((status === 204)) {
     const ob = ctx.request.body;
 
-    const newData = {
-      id: ind,
-    }
+    const newData = {}
     const newDataObj = Object.create(newData);
     const k = Object.keys(ob);
+    newDataObj.id = ind
     for (let i = 0; i < k.length; i++) {
       newDataObj[k[i]] = ob[k[i]]
     }
 
-    items[items.length] = newDataObj
+    // items[items.length] = newDataObj
     console.warn(`[REQ_6]: ${JSON.stringify(ob)}`);
     ind += 1
+    try {
+      productsFs = await new Promise((resolve, reject) => {
+        fs.readFile(path.resolve(__dirname, './data/products.json'), 'utf8', (err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+            let items = JSON.parse(data);
+            const newItems = items;
+            resolve(newItems);
+          }
+        });
+      });
+
+      console.log(`/* ----^----${JSON.stringify(newDataObj)}--------- */`);
+      productsFs.push(newDataObj)
+      console.log(`/* ----^----${JSON.stringify(productsFs)}--------- */`);
+      new Promise((resolve, reject) => {
+        fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(productsFs), (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
+    } catch (err) {
+      console.error('Error writing or reading file:', err);
+      ctx.response.status = 500;
+      ctx.response.body = 'Internal Server Error';
+      return;
+    }
   }
   if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('/api/v1/all'))) {
     try {
