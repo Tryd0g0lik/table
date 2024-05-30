@@ -63,40 +63,48 @@ export default function TableFC(): React.JSX.Element {
   // fetchData(setPropsNew);
 
   useEffect(() => {
-    const div = document.querySelector('.full');
-    if (div === null) {
-      return;
-    }
-    const table = div.querySelector('table.main');
-    if (table === null) {
-      return;
-    };
+    // const div = document.querySelector('.full');
+    // if (div === null) {
+    //   return;
+    // }
+    // const table = div.querySelector('table.main');
+    // if (table === null) {
+    //   return;
+    // };
 
-    const tbody = table.querySelector('tbody');
-    if (tbody === null) {
-      return;
-    };
+    // const tbody = table.querySelector('tbody');
+    // if (tbody === null) {
+    //   return;
+    // };
 
     // const handlerState = handlerRequestFull(setProps);
-    (div as HTMLDivElement).removeEventListener('click', async (e) => {
-      e.preventDefault();
-      const res = await handlerRequestFull(e);
-      setProps(res as F | F[]);
-    });
-    (div as HTMLDivElement).addEventListener('click', async (e) => {
-      e.preventDefault();
-      const res = await handlerRequestFull(e);
-      if ((res === false) || (res === null)) {
-        return;
-      }
-      setProps(res as F | F[]);
-    });
+    // (div as HTMLDivElement).removeEventListener('click', async (e) => {
+    //   e.preventDefault();
+    //   const res = await handlerRequestFull(e);
+    //   setProps(res as F | F[]);
+    // });
+    // (div as HTMLDivElement).addEventListener('click', async (e) => {
+    //   e.preventDefault();
+    //   const res = await handlerRequestFull(e);
+    //   if ((res === false) || (res === null)) {
+    //     return;
+    //   }
+    //   setProps(res as F | F[]);
+    // });
 
     test();
   }, []);
-
+  const handlerState = async (e) => {
+    e.preventDefault();
+    i = 0;
+    const res = await handlerRequestFull(e);
+    if ((res === false) || (res === null)) {
+      return;
+    }
+    setProps(res as F | F[]);
+  };
   return (
-    <div className="full overflow-x-auto">
+    <div onClick={handlerState} className="full overflow-x-auto" >
       <table className="main table table-xs">
         <thead>
           <tr>

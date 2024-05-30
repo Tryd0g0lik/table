@@ -17,7 +17,7 @@ const fortune = async (ctx, body = null, status = 200) => {
     const k = Object.keys(ob);
 
     try {
-      productsFs = await new Promise((resolve, reject) => {
+      await new Promise((resolve, reject) => {
         fs.readFile(path.resolve(__dirname, './data/products.json'), 'utf8', (err, data) => {
           if (err) {
             reject(err);
@@ -25,7 +25,26 @@ const fortune = async (ctx, body = null, status = 200) => {
             let items = JSON.parse(data);
 
             const newItems = items;
-            resolve(newItems);
+
+            let ind = 0;
+            const indArr = Array.from(Object.keys(items))
+            const newInd = indArr[indArr.length - 1];
+            // console.log(`/* ----^----${Number(newInd)}--------- */`);
+            ind = Number(newInd)
+
+            newDataObj.id = ind + 1;
+            for (let i = 0; i < k.length; i++) {
+              newDataObj[k[i]] = ob[k[i]]
+            }
+            newItems.push(newDataObj)
+            fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(newItems), (err) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve();
+              }
+            });
+            resolve();
           }
         });
       });
@@ -36,29 +55,27 @@ const fortune = async (ctx, body = null, status = 200) => {
       return;
     }
     try {
-      let ind = 0;
-      const indArr = Array.from(Object.keys(productsFs))
-      const newInd = indArr[indArr.length - 1];
-      console.log(`/* ----^----${Number(newInd)}--------- */`);
-      ind = Number(newInd)
+      // let ind = 0;
+      // const indArr = Array.from(Object.keys(productsFs))
+      // const newInd = indArr[indArr.length - 1];
+      // // console.log(`/* ----^----${Number(newInd)}--------- */`);
+      // ind = Number(newInd)
 
-      newDataObj.id = ind + 1;
-      for (let i = 0; i < k.length; i++) {
-        newDataObj[k[i]] = ob[k[i]]
-      }
-      // console.log(`/* ----^----${JSON.stringify(newDataObj)}--------- */`);
-      productsFs.push(newDataObj)
-      // console.log(`/* ----^----${JSON.stringify(productsFs)}--------- */`);
+      // newDataObj.id = ind + 1;
+      // for (let i = 0; i < k.length; i++) {
+      //   newDataObj[k[i]] = ob[k[i]]
+      // }
+      // productsFs.push(newDataObj)
 
-      new Promise((resolve, reject) => {
-        fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(productsFs), (err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-      });
+      // await new Promise((resolve, reject) => {
+      //   fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(productsFs), (err) => {
+      //     if (err) {
+      //       reject(err);
+      //     } else {
+      //       resolve();
+      //     }
+      //   });
+      // });
     } catch (err) {
       console.error('Error writing or reading file:', err);
       ctx.response.status = 500;
