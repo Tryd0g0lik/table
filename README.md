@@ -1,5 +1,4 @@
-[![workers-ne](http://github.com/Tryd0g0lik/workers-ne/actions/table/main.yml/badge.svg?branch=master)](http://github.com/Tryd0g0lik/table/actions/workflows/main.yml)
-[![Build status](https://ci.appveyor.com/api/projects/status/aqk9nqdmr3wuigt1/branch/master?svg=true)](https://ci.appveyor.com/project/Tryd0g0lik/test-table/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/djpacjee3rpgy85o/branch/master?svg=true)](https://ci.appveyor.com/project/Tryd0g0lik/test-table/branch/master)
 # The task description
 **Формулировка**: \
 Необходимо реализовать модель таблицы, в которую можно вносить данные. \
