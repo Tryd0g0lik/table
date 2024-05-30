@@ -15,7 +15,7 @@ function tablesReducer(state = {
     state.props = action.props;
     return {
       type: 'TABLE',
-      props: state.props
+      props: state
     };
   } else {
     return state;

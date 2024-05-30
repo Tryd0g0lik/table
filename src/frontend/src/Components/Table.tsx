@@ -24,14 +24,6 @@ const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> =>
     return;
   }
   i += 1;
-  // setprops(resp);
-  // const tables = {
-  //   type: 'TEBLE',
-  //   props: resp
-  // };
-
-  // storeDispatch({ ...tables });
-  // const getTotalStore = storeGetstate();
   setprops(resp);
 };
 
@@ -46,12 +38,23 @@ export default function TableFC(): React.JSX.Element {
   const [props, setProps] = useState<F | F[] | null>(null);
   // const setPropsNew = updateStates(setProps);
 
+  const test = () => {
+    const timeout = setTimeout(() => {
+      const getTotalStore = storeGetstate();
+      const props_ = getTotalStore.props;
+
+      if (props_.length <= 1) {
+        test();
+      } else {
+        clearTimeout(timeout);
+        setProps(props_.props.props);
+      }
+    }, 1000);
+  };
+
   // fetchData(setPropsNew);
 
   useEffect(() => {
-    const getTotalStore = storeGetstate();
-    const props_ = getTotalStore.tables.props;
-    setProps(props_);
     const div = document.querySelector('.full');
     if (div === null) {
       return;
@@ -67,9 +70,10 @@ export default function TableFC(): React.JSX.Element {
     };
 
     const handlerState = handlerRequestFull(setProps);
-
     (div as HTMLDivElement).removeEventListener('click', handlerState);
     (div as HTMLDivElement).addEventListener('click', handlerState);
+
+    test();
   }, []);
 
   return (

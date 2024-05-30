@@ -22,8 +22,8 @@ const fetchData = async (): Promise<any> => {
 const setUserCategory = async (): Promise<void> => {
   const state = await fetchData();
   const tables = {
-    type: 'TEBLE',
-    props: state.props
+    type: 'TABLE',
+    props: state //.props
   };
 
   storeDispatch({ ...tables });
