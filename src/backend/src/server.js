@@ -7,13 +7,9 @@ const logger = require("koa-logger");
 const Router = require('koa-router');
 const cors = require('koa2-cors');
 const koaBody = require('koa-body');
-// const productsFs = fs.readFileSync(path.resolve(__dirname, './data/products.json'));
-
-// let items = JSON.parse(productsFs);
 let ind = 19;
 
 const fortune = async (ctx, body = null, status = 200) => {
-  // console.log(`/* --------${JSON.stringify(ctx.originalUrl)}--------- */`);
   if ((status === 204)) {
     const ob = ctx.request.body;
 
@@ -39,9 +35,7 @@ const fortune = async (ctx, body = null, status = 200) => {
         });
       });
 
-      console.log(`/* ----^----${JSON.stringify(newDataObj)}--------- */`);
       productsFs.push(newDataObj)
-      console.log(`/* ----^----${JSON.stringify(productsFs)}--------- */`);
       new Promise((resolve, reject) => {
         fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(productsFs), (err) => {
           if (err) {
@@ -91,7 +85,6 @@ const fortune = async (ctx, body = null, status = 200) => {
           } else {
 
             let items = JSON.parse(data);
-
             const newItems = items.filter(o => o.id !== ind);
             fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(newItems), (err) => {
               if (err) {
@@ -114,8 +107,6 @@ const fortune = async (ctx, body = null, status = 200) => {
   }
   const delay = 0;
   return new Promise((resolve, reject) => {
-
-
     setTimeout(() => {
       ctx.response.status = status;
       ctx.response.body = body;

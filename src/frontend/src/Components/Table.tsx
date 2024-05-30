@@ -26,15 +26,12 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
     };
 
     const handlerRequestFull = async (e: MouseEvent): Promise<void> => {
-      // дублирует
       const target = e.target as HTMLElement;
-
+      e.preventDefault();
       const truefalse = relevantButton(target, 'add', 'BUTTON');
       if (!truefalse) {
         return;
       }
-
-      e.preventDefault();
 
       const resp = await handlerRequest(e);
       if ((typeof resp) === 'boolean') {

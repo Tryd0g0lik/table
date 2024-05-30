@@ -5,7 +5,6 @@ const Dotenv = require('dotenv-webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// config.output.path = require('path').resolve('./interface/dist');
 
 module.exports = {
   entry: './src/frontend/index.ts',
