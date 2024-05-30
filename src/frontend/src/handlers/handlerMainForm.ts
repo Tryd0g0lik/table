@@ -19,6 +19,12 @@ export default async function handlerButtonCickAdd(e: MouseEvent): Promise<boole
   if (!((e.target as HTMLElement).tagName).includes('BUTTON')) {
     return false;
   }
+  const tr = ((e.target as HTMLElement).parentNode as HTMLElement).parentNode as HTMLElement;
+  const inputAll_ = tr.querySelectorAll('input');
+  if (inputAll_.length === 0) {
+    return false;
+  }
+
   if (ind_ !== 0) {
     return false;
   }
@@ -52,6 +58,7 @@ export default async function handlerButtonCickAdd(e: MouseEvent): Promise<boole
   const postman = new Postman(url);
 
   const jsonStr = JSON.stringify(datas);
+  ind_ = 0;
   let response = await postman.post({ context: jsonStr });
   if (response === false) {
     return false;
@@ -60,10 +67,14 @@ export default async function handlerButtonCickAdd(e: MouseEvent): Promise<boole
   /* ------ Below get update's datas ------ */
   url = new URL(APP_TABLE_PATHNAME as string + '/api/v1/all', APP_TABLE_URL);
   postman.urls = url;
+
   response = await postman.get({ contentType: 'application/json; charset=utf-8' });
   if (response === false) {
     return false;
   }
   // tbod
+  Array.from(inputAll_).forEach((item) => {
+    item.value = '';
+  });
   return response;
 }

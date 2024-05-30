@@ -28,15 +28,16 @@ const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> =>
 export default function TableFC(prop: F | F[]): React.JSX.Element {
   const [props, setProps] = useState<F | F[] | null>(null);
   const updateStates = (props) => {
+    i = 0;
     setProps(props);
   };
 
   useEffect(() => {
+    updateStates(prop);
     const div = document.querySelector('.full');
     if (div === null) {
       return;
     }
-
     const table = div.querySelector('table.main');
     if (table === null) {
       return;
@@ -48,11 +49,13 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
     };
 
     const handlerState = handlerRequestFull(updateStates);
-    i = 0;
+
     (div as HTMLDivElement).removeEventListener('click', handlerState);
     (div as HTMLDivElement).addEventListener('click', handlerState);
   }, []);
-  const res = ((props === undefined) || (props === null)) ? prop : props;
+
+  // const res = props; // ((props === undefined) || (props === null)) ? prop : props;
+
   return (
     <div className="full overflow-x-auto">
       <table className="main table table-xs">
@@ -80,7 +83,7 @@ export default function TableFC(prop: F | F[]): React.JSX.Element {
           </tr>
         </thead>
         <tbody>
-          <RowFC {...res} />
+          <RowFC {...props} />
         </tbody>
         <tfoot>
           <tr>
