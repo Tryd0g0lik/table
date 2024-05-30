@@ -25,7 +25,7 @@ export default function FormsFC(): React.JSX.Element {
                 <input data-name='lastname' type="text" placeholder="Insert lastname" className="input w-full max-w-xs" />
               </td>
               <td className='coll coll-2 lastlogin '>
-                <button className="btn btn-info w-16">Add</button>
+                <button data-name='add' type="button" className="btn btn-info w-16">Add</button>
               </td>
             </tr>
           </tbody>

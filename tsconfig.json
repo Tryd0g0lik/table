@@ -28,12 +28,7 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      // "@type": [
-      //   "src/frontend/src/interfaces.ts"
-      // ],
-      // "@Websocket": [
-      //   "src/scripts/websockets/index.ts"
-      // ],
+      
       "@Interfaces": [
         "src/frontend/src/interfaces.ts"
       ],
@@ -52,18 +47,7 @@
       "@ind": [
         "src/backend/src/getId.ts"
       ]
-      // "@pages/*": [
-      //   "./src/frontend/src/components/pages/*"
-      // ],
-      // "@site/*": [
-      //   "./src/frontend/src/components/site/*"
-      // ],
-      // "@service/*": [
-      //   "./src/frontend/src/chat/*"
-      // ],
-      // "@reduxs/*": [
-      //   "./src/frontend/src/reduxs/*",
-      // ]
+      
     }
   },
   "exclude": [

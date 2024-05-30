@@ -4,8 +4,12 @@
 
 :root {}
 
+#root {
+  padding-top: 80px;
+}
 #root * {
   box-sizing: border-box;
+  
 }
 
 .form_body {
@@ -31,12 +35,13 @@
   border: solid 1px #cfcfcf7d;
 }
 
-#root h1 {
-  position: fixed;
+#root .h1 {
+  position: absolute;
   background: black;
   z-index: 2;
   display: block;
   width: 100%;
   padding: 0.5rem;
-  padding-top: 80px;
+  top: 0;
+    left: 0;
 }

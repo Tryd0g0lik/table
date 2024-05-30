@@ -16,7 +16,7 @@
     "**/db"
   ],
   "files": [
-    ".\\src\\index.ts",
+    "src/index.ts",
     // ".\\src\\server\\web-socket\\index.ts"
   ]
   // 

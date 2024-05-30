@@ -11,13 +11,11 @@ import getCookie from '@Service/cookies';
 }`
  */
 class Postman {
-  element: HTMLDivElement | HTMLFormElement;
 
   urls: string | object;
 
-  constructor(element: HTMLDivElement | HTMLFormElement) {
-    this.element = element;
-    this.urls = '';
+  constructor(url: string | object) {
+    this.urls = url;
   }
 
   async post(props: RequestHeaders): Promise<object | boolean> {
@@ -94,6 +92,29 @@ class Postman {
     }
     const responseJson = await response.json();
     return responseJson;
+  }
+
+  /**
+  * `id` for a remove through URL \
+  * `/api/v1/remove/:id` - for a remove row
+  * */
+  async delete(): Promise<string> {
+    const url = this.urls;
+    const response = await fetch(url, {
+      method: 'DELETE',
+      'X-CSRFToken': getCookie('csrftoken'),
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      cache: 'no-cache',
+      mode: 'cors'
+    });
+    /*   */
+    if (!response.ok as boolean) {
+      const err = new Error(String(response.ok));
+      err.name = '[Postman > dalete]';
+      throw err;
+    };
+    return 'Ok';
   }
 }
 
