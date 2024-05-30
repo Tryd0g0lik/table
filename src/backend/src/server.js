@@ -7,25 +7,14 @@ const logger = require("koa-logger");
 const Router = require('koa-router');
 const cors = require('koa2-cors');
 const koaBody = require('koa-body');
-let ind = 19;
 
 const fortune = async (ctx, body = null, status = 200) => {
   if ((status === 204)) {
-    console.log(`/* ----status^----${status}--------- */`);
     const ob = ctx.request.body;
 
     const newData = {}
     const newDataObj = Object.create(newData);
     const k = Object.keys(ob);
-    ind += 1
-    newDataObj.id = ind
-    for (let i = 0; i < k.length; i++) {
-      newDataObj[k[i]] = ob[k[i]]
-    }
-
-    console.log(`/* ----ind^----${ind}--------- */`);
-    // items[items.length] = newDataObj
-    // console.warn(`[REQ_6]: ${JSON.stringify(ob)}`);
 
     try {
       productsFs = await new Promise((resolve, reject) => {
@@ -34,12 +23,29 @@ const fortune = async (ctx, body = null, status = 200) => {
             reject(err);
           } else {
             let items = JSON.parse(data);
+
             const newItems = items;
             resolve(newItems);
           }
         });
       });
+    } catch (err) {
+      console.error('Error writing or reading file:', err);
+      ctx.response.status = 500;
+      ctx.response.body = 'Internal Server Error';
+      return;
+    }
+    try {
+      let ind = 0;
+      const indArr = Array.from(Object.keys(productsFs))
+      const newInd = indArr[indArr.length - 1];
+      console.log(`/* ----^----${Number(newInd)}--------- */`);
+      ind = Number(newInd)
 
+      newDataObj.id = ind + 1;
+      for (let i = 0; i < k.length; i++) {
+        newDataObj[k[i]] = ob[k[i]]
+      }
       // console.log(`/* ----^----${JSON.stringify(newDataObj)}--------- */`);
       productsFs.push(newDataObj)
       // console.log(`/* ----^----${JSON.stringify(productsFs)}--------- */`);
@@ -168,13 +174,12 @@ router.post('/api/v1/add/line', async (ctx, next) => {
     return fortune(ctx, 'Bad Request: Lastlogin', 400);
   }
 
+
   return fortune(ctx, null, 204);
 });
 
 app.use(router.routes())
 app.use(router.allowedMethods());
-
-
 
 server.listen(port, () => {
   console.log(`[Server started on port]: ${port}`);

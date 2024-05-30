@@ -32,6 +32,7 @@ const setUserCategory = async (): Promise<void> => {
 function App(): React.JSX.Element {
   console.log('TEST:');
   setUserCategory();
+  console.log(' Hello world!');
   return (
     <>
       <div className='h1'>

@@ -8,14 +8,21 @@ import { storeGetstate, storeDispatch } from '../reduxs/store';
 let i = 0;
 
 // const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> => {
+
+
+/* ---- */
+// const updateStates = (setprops) => (props): void => {
+//   i = 0;
+//   setprops(props);
+// };
 const handlerRequestFull = async (e: MouseEvent): Promise<F | F[] | boolean> => {
   const target = e.target as HTMLElement;
-  // e.preventDefault();
+  e.preventDefault();
   const truefalse = relevantButton(target, 'add', 'BUTTON');
   if (!truefalse) {
     return false;
   }
-
+  console.log('TTTTT');
   const resp = await handlerRequest(e);
   if ((typeof resp) === 'boolean') {
     return false;
@@ -25,21 +32,19 @@ const handlerRequestFull = async (e: MouseEvent): Promise<F | F[] | boolean> => 
     return false;
   }
   i += 1;
+  if ((resp === false) || (resp === null)) {
+    return false;
+  }
+
   // storeDispatch(resp)
   // setprops(resp);
   return resp;
 };
-
-/* ---- */
-// const updateStates = (setprops) => (props): void => {
-//   i = 0;
-//   setprops(props);
-// };
-
 /* ---- */
 export default function TableFC(): React.JSX.Element {
   const [props, setProps] = useState<F | F[] | null>(null);
   // const setPropsNew = updateStates(setProps);
+
 
   const test = () => {
     const timeout = setTimeout(() => {
@@ -52,7 +57,7 @@ export default function TableFC(): React.JSX.Element {
         clearTimeout(timeout);
         setProps(props_.props.props);
       }
-    }, 1000);
+    }, 100);
   };
 
   // fetchData(setPropsNew);
@@ -76,9 +81,6 @@ export default function TableFC(): React.JSX.Element {
     (div as HTMLDivElement).removeEventListener('click', async (e) => {
       e.preventDefault();
       const res = await handlerRequestFull(e);
-      if ((res === false) || (res === null)) {
-        return;
-      }
       setProps(res as F | F[]);
     });
     (div as HTMLDivElement).addEventListener('click', async (e) => {
@@ -87,7 +89,6 @@ export default function TableFC(): React.JSX.Element {
       if ((res === false) || (res === null)) {
         return;
       }
-
       setProps(res as F | F[]);
     });
 
