@@ -7,14 +7,15 @@ const logger = require("koa-logger");
 const Router = require('koa-router');
 const cors = require('koa2-cors');
 const koaBody = require('koa-body');
-const productsFs = fs.readFileSync(path.resolve(__dirname, './data/products.json'));
+// const productsFs = fs.readFileSync(path.resolve(__dirname, './data/products.json'));
 
-let items = JSON.parse(productsFs);
+// let items = JSON.parse(productsFs);
 let ind = 21;
 
-const fortune = (ctx, body = null, status = 200) => {
-  // const delay = randomNumber(1, 10) * 1000;
-  if (status === 204) {
+const fortune = async (ctx, body = null, status = 200) => {
+// const delay = randomNumber(1, 10) * 1000; 
+  // console.log(`/* --------${JSON.stringify(ctx.originalUrl)}--------- */`);
+  if ((status === 204)) {
     const ob = ctx.request.body;
 
     const newData = {
@@ -30,11 +31,62 @@ const fortune = (ctx, body = null, status = 200) => {
     console.warn(`[REQ_6]: ${JSON.stringify(ob)}`);
     ind += 1
   }
-  if (status === 200) {
-    body = JSON.stringify(items);
+  if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('/api/v1/all'))) {
+    try {
+      const items = await new Promise((resolve, reject) => {
+        fs.readFile(path.resolve(__dirname, './data/products.json'), 'utf8', (err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+            const items = JSON.parse(data);
+            resolve(items);
+          }
+        });
+      });
+      body = JSON.stringify(items);
+
+    } catch (err) {
+      console.error('Error writing or reading file:', err);
+      ctx.response.status = 500;
+      ctx.response.body = 'Internal Server Error';
+      return;
+    }
+
   }
-  if (status === 301) {
-    body = null;
+  if ((status === 200) && (JSON.stringify(ctx.originalUrl).includes('api/v1/remove/'))) {
+    const ind = Number(ctx.originalUrl.split('=')[1]);
+    console.log(`/* --------${status}--------- */`);
+    // console.log(`/* ------------${JSON.stringify(newItems)}----- */`);
+    try {
+      productsFs = await new Promise((resolve, reject) => {
+        fs.readFile(path.resolve(__dirname, './data/products.json'), 'utf8', (err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+
+            let items = JSON.parse(data);
+
+            const newItems = items.filter(o => o.id !== ind);
+            console.log(`/* --------${items[0].id}-${ctx.originalUrl.split('=')[1]}-------- */`);
+            // console.log(`/* ------------${JSON.stringify(newItems)}----- */`);
+            fs.writeFile(path.resolve(__dirname, './data/products.json'), JSON.stringify(newItems), (err) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve();
+              }
+            });
+
+            resolve(newItems);
+          }
+        });
+      });
+    } catch (err) {
+      console.error('Error writing or reading file:', err);
+      ctx.response.status = 500;
+      ctx.response.body = 'Internal Server Error';
+      return;
+    }
   }
   const delay = 0;
   return new Promise((resolve, reject) => {
@@ -64,17 +116,11 @@ const router = new Router();
 
 
 router.get('/api/v1/all', async (ctx, next) => {
-  return fortune(ctx, items);
+  return fortune(ctx);
 });
 
 router.del('/api/v1/remove/', async (ctx, next) => {
-  const id = Number(ctx.params.id);
-  const newItems = items.find(o => o.id !== id);
-  if (newItems === undefined) {
-    return fortune(ctx, 'Not found', 404);
-  }
-  items = newItems;
-  return fortune(ctx, newItems, 301);
+  return fortune(ctx, 301);
 
 });
 
@@ -102,27 +148,6 @@ router.post('/api/v1/add/line', async (ctx, next) => {
   if (!(typeof lastlogin).includes('string')) {
     return fortune(ctx, 'Bad Request: Lastlogin', 400);
   }
-
-  // if (!Array.isArray(items)) {
-  //   return fortune(ctx, 'Bad Request: Items', 400);
-  // }
-
-  // if (!items.every(({ id, price, count }) => {
-  //   if (typeof id !== 'number' || id <= 0) {
-  //     return false;
-  //   }
-
-  //   if (typeof price !== 'number' || price <= 0) {
-  //     return false;
-  //   }
-
-  //   if (typeof count !== 'number' || count <= 0) {
-  //     return false;
-  //   }
-  //   return true;
-  // })) {
-  //   return fortune(ctx, 'Bad Request', 400);
-  // }
 
   return fortune(ctx, null, 204);
 });
