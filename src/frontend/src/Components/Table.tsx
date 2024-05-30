@@ -7,24 +7,27 @@ import relevantButton from '@relevant/relevantButton';
 import { storeGetstate, storeDispatch } from '../reduxs/store';
 let i = 0;
 
-const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> => {
+// const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> => {
+const handlerRequestFull = async (e: MouseEvent): Promise<F | F[] | boolean> => {
   const target = e.target as HTMLElement;
   // e.preventDefault();
   const truefalse = relevantButton(target, 'add', 'BUTTON');
   if (!truefalse) {
-    return;
+    return false;
   }
 
   const resp = await handlerRequest(e);
   if ((typeof resp) === 'boolean') {
-    return;
+    return false;
   }
 
   if (i !== 0) {
-    return;
+    return false;
   }
   i += 1;
-  setprops(resp);
+  // storeDispatch(resp)
+  // setprops(resp);
+  return resp;
 };
 
 /* ---- */
@@ -69,9 +72,26 @@ export default function TableFC(): React.JSX.Element {
       return;
     };
 
-    const handlerState = handlerRequestFull(setProps);
-    (div as HTMLDivElement).removeEventListener('click', handlerState);
-    (div as HTMLDivElement).addEventListener('click', handlerState);
+    // const handlerState = handlerRequestFull(setProps);
+    (div as HTMLDivElement).removeEventListener('click', async (e) => {
+      i = 0;
+      e.preventDefault();
+      const res = await handlerRequestFull(e);
+      if ((res === false) || (res === null)) {
+        return;
+      }
+      setProps(res as F | F[]);
+    });
+    (div as HTMLDivElement).addEventListener('click', async (e) => {
+      i = 0;
+      e.preventDefault();
+      const res = await handlerRequestFull(e);
+      if ((res === false) || (res === null)) {
+        return;
+      }
+
+      setProps(res as F | F[]);
+    });
 
     test();
   }, []);
