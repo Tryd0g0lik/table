@@ -74,7 +74,6 @@ export default function TableFC(): React.JSX.Element {
 
     // const handlerState = handlerRequestFull(setProps);
     (div as HTMLDivElement).removeEventListener('click', async (e) => {
-      i = 0;
       e.preventDefault();
       const res = await handlerRequestFull(e);
       if ((res === false) || (res === null)) {
@@ -83,7 +82,6 @@ export default function TableFC(): React.JSX.Element {
       setProps(res as F | F[]);
     });
     (div as HTMLDivElement).addEventListener('click', async (e) => {
-      i = 0;
       e.preventDefault();
       const res = await handlerRequestFull(e);
       if ((res === false) || (res === null)) {
