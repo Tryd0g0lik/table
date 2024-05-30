@@ -5,6 +5,8 @@ import { F } from '@Interfaces';
 import RowFC from './Row';
 import relevantButton from '@relevant/relevantButton';
 import { storeGetstate, storeDispatch } from '../reduxs/store';
+import { APP_TABLE_URL } from '@Service/env';
+import Postman from '@ObjectDevelopment/requests';
 let i = 0;
 
 // const handlerRequestFull = (setprops) => async (e: MouseEvent): Promise<void> => {
@@ -63,10 +65,10 @@ export default function TableFC(): React.JSX.Element {
   // fetchData(setPropsNew);
 
   useEffect(() => {
-    // const div = document.querySelector('.full');
-    // if (div === null) {
-    //   return;
-    // }
+    const div = document.querySelector('.full');
+    if (div === null) {
+      return;
+    }
     // const table = div.querySelector('table.main');
     // if (table === null) {
     //   return;
@@ -75,22 +77,22 @@ export default function TableFC(): React.JSX.Element {
     // const tbody = table.querySelector('tbody');
     // if (tbody === null) {
     //   return;
+    const nandlerRemove = async (e): Promise<void> => {
+      e.preventDefault();
+      const url = new URL('/api/v1/all', APP_TABLE_URL);
+      const postman = new Postman(url);
+      const res = await postman.get({ contentType: 'application/json; charset=utf-8' });
+      setProps(res as F | F[]);
+    };
     // };
-
     // const handlerState = handlerRequestFull(setProps);
     // (div as HTMLDivElement).removeEventListener('click', async (e) => {
     //   e.preventDefault();
     //   const res = await handlerRequestFull(e);
     //   setProps(res as F | F[]);
     // });
-    // (div as HTMLDivElement).addEventListener('click', async (e) => {
-    //   e.preventDefault();
-    //   const res = await handlerRequestFull(e);
-    //   if ((res === false) || (res === null)) {
-    //     return;
-    //   }
-    //   setProps(res as F | F[]);
-    // });
+    (div as HTMLDivElement).removeEventListener('update', nandlerRemove);
+    (div as HTMLDivElement).addEventListener('update', nandlerRemove);
 
     test();
   }, []);

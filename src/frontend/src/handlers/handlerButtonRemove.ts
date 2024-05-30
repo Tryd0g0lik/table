@@ -20,8 +20,8 @@ const handlerClickRemove = async (e: React.MouseEvent): Promise<boolean> => {
   url.searchParams.set('id', ind as string);
   const result = new Postman(url);
   await result.delete();
-  // const ev = new Event('update');
-  // currentTarget.dispatchEvent(ev);
+  const ev = new Event('update', { bubbles: true });
+  currentTarget.dispatchEvent(ev);
   return true;
 };
 export default handlerClickRemove;
